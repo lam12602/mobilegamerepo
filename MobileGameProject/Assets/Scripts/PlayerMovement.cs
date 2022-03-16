@@ -7,7 +7,7 @@ using UnityEngine;
 public class PlayerMovement : MonoBehaviour
 {
 
-
+    public float moveSpeed = 3;
     
     private Rigidbody2D physicsBody = null;
 
@@ -17,12 +17,16 @@ public class PlayerMovement : MonoBehaviour
     {
         physicsBody = GetComponent<Rigidbody2D>();
 
-        physicsBody.velocity = new Vector2(2,0);
+        //physicsBody.velocity = new Vector2(2,0);
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+        //ask unity for current value for hori axis
+        float axisVal = Input.GetAxis("Horizontal");
+        Vector2 newVel = new Vector2(axisVal, 0);
+        newVel = newVel * moveSpeed;
+        physicsBody.velocity = newVel;
     }
 }
