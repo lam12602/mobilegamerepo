@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 public class ScoreTotal : MonoBehaviour
 {
-    private int scoreValue = 0;
+    private static int scoreValue = 0;
     public Text scoreDisplay;
     public void AddScore(int tooAdd)
     {
