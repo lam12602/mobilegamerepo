@@ -1,36 +1,36 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class ColissionChecker : MonoBehaviour
 {
     // Start is called before the first frame update
-    private void OnCollisionEnter2D(Collision2D collision)
+    public Vector3 originalPos;
+    private GameMaster gm;
+    private void Awake()
     {
-        //thing we ran into
-        GameObject othherObject = collision.gameObject;
-
-        //gets the name of the object
-        string otherName = othherObject.name;
-
-        //check the tag on the object
-        string otherTag = othherObject.tag;
-
-        //we can get sorting layer of the obeject
-        int layer = othherObject.layer;
-
-        //we canm check if a script is on the object
-        //getting a componetnt
-        SpriteRenderer spriteRenderer = othherObject.GetComponent<SpriteRenderer>();
-
-        Debug.Log("Collison");
-        Debug.Log("Name" + otherName);
-        Debug.Log("Tag" + otherTag);
-        if(spriteRenderer != null)
-        {
-            spriteRenderer.color = Color.green;
-        }
-        
+        originalPos = gameObject.transform.position;
 
     }
+
+    private void OnCollisionEnter2D(Collision2D other)
+    {
+        gm = GameObject.FindGameObjectWithTag("GM").GetComponent<GameMaster>();
+
+        // detects if the object collided with has either the enemy or Killbox tags
+        if (other.gameObject.CompareTag("Enemy") || other.gameObject.CompareTag("Killbox"))
+        {
+            //writes in the debug log that the reset happened
+            Debug.Log("Collision Reset occurred");
+            //  gameObject.transform.position = originalPos;
+            //reloads the scene and puts the player back to the most recent checkpoint in the scene.
+            transform.position = gm.LastCheckpointPos;
+            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+        }
+
+    }
+
+
 }
+

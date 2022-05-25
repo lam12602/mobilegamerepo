@@ -8,8 +8,14 @@ public class PlayerMovement : MonoBehaviour
 {
 
     public float moveSpeed = 3;
-    
-    private Rigidbody2D physicsBody = null;
+    private readonly float jumpVelocity = 10f;
+
+    private bool isGrounded = true;
+    // sets multipliers for the jump and fall speeds
+    public float fallMultiplier = 2.5f;
+    public float lowJumpMultiplier = 2f;
+
+    public Rigidbody2D physicsBody = null;
 
 
     // Start is called before the first frame update
@@ -42,4 +48,30 @@ public class PlayerMovement : MonoBehaviour
         physicsBody.velocity = newVel;
 
     }
-}
+    
+    public void Jump()
+    {
+        if ( isGrounded)
+        {
+
+            physicsBody.velocity = Vector2.up * jumpVelocity;
+            isGrounded = false;
+        }
+        // sets the multiplier when you start jumping
+        if (physicsBody.velocity.y < 0)
+        {
+            physicsBody.velocity += (fallMultiplier - 1) * Physics2D.gravity.y * Time.deltaTime * Vector2.up;
+        }
+        // sets the multiplier if falling so that you fall faster
+        else if (physicsBody.velocity.y > 0 && Input.GetKey(KeyCode.Space))
+        {
+            physicsBody.velocity += (lowJumpMultiplier - 1) * Physics2D.gravity.y * Time.deltaTime * Vector2.up;
+        }
+    }
+        //checks for collision, if hits someting, will mark as "grounded" allowing for another jump
+        private void OnCollisionEnter2D(Collision2D collision)
+    {
+            isGrounded = true;
+    }
+    }
+

@@ -122,6 +122,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   moveSpeed: 3
+  fallMultiplier: 2.5
+  lowJumpMultiplier: 2
+  physicsBody: {fileID: 0}
 --- !u!70 &5109177318374107727
 CapsuleCollider2D:
   m_ObjectHideFlags: 0
@@ -150,6 +153,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dcd1bd8084b631d4f8c2201bf52ace1d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  originalPos: {x: 0, y: 0, z: 0}
 --- !u!114 &-6750043596473774860
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -162,3 +166,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 80f348b07da1b204ab442834b1d68d85, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  scoreDisplay: {fileID: 0}
